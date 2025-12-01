@@ -32,6 +32,9 @@ namespace WpfApp1.Pages
                 _student = _editStudent;
                 isEdit = true;
             }
+
+            if (_student.Passport == null)
+                _student.Passport = new();
             DataContext = _student;
         }
         private void save (object sender, RoutedEventArgs e)

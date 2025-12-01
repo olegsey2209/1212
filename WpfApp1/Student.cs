@@ -38,5 +38,24 @@ namespace WpfApp1
             get => _birthday;
             set => SetProperty(ref _birthday, value);
         }
+        private Passport _passport;
+        public Passport Passport
+        {
+            get => _passport;
+            set => SetProperty
+            (ref _passport, value);
+        }
+        private int _groupId;
+        public int GroupId
+        {
+            get => _groupId;
+            set => SetProperty(ref _groupId, value);
+        }
+        private Group _group;
+        public Group Group
+        {
+            get => _group;
+            set => SetProperty(ref _group, value);
+        }
     }
 }

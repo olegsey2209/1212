@@ -31,6 +31,10 @@ namespace WpfApp1.Pages
         {
             NavigationService.Navigate(new StudentFormPage( ));
         }
+        public void grupo(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new GroupList());
+        }
         public void Edit (object sender, EventArgs e)
         {
             if (student == null)

@@ -12,8 +12,8 @@ using WpfApp1;
 namespace WpfApp1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251125042219_InitialDB")]
-    partial class InitialDB
+    [Migration("20251130191032_AddTablePassportAndHasOneRelation")]
+    partial class AddTablePassportAndHasOneRelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,31 @@ namespace WpfApp1.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("WpfApp1.Passport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Series")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Passports");
+                });
 
             modelBuilder.Entity("WpfApp1.Student", b =>
                 {
@@ -51,6 +76,23 @@ namespace WpfApp1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("WpfApp1.Passport", b =>
+                {
+                    b.HasOne("WpfApp1.Student", "Student")
+                        .WithOne("Passport")
+                        .HasForeignKey("WpfApp1.Passport", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("WpfApp1.Student", b =>
+                {
+                    b.Navigation("Passport")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

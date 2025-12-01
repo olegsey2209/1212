@@ -10,8 +10,24 @@ namespace WpfApp1
     public class AppDbContext :DbContext
     {
         public DbSet<Student> Students { get; set; }
+        public DbSet<Passport> Passports { get; set; }
+        public DbSet<Group> Groups { get; set; }
         protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=sql.ects;Database=forratdb;User Id=student_05; Password=student_05; TrustServerCertificate = True; "); }
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=MyDatabase2;Trusted_Connection=True;TrustServerCertificate=True;  "); }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+                            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Passport)
+                .WithOne(ps => ps.Student)
+                .HasForeignKey<Passport>(ps => ps.StudentId);
+
+            modelBuilder.Entity<Group>() 
+.HasMany(g => g.Students)
+.WithOne(s => s.Group)
+.HasForeignKey(s => s.GroupId);
+
+
+        }
     }
 }
